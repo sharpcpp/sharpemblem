@@ -20,11 +20,13 @@ int main(int argc, const char** argv)
     try
     {
         cv::Mat source{};
-        if (image.cols > 320 || image.rows > 320)
+        if (image.cols > 128 || image.rows > 128)
         {
-            cv::resize(image, source, cv::Size(std::min<int>(320, image.cols), std::min<int>(320, image.rows)), 0, 0, cv::INTER_NEAREST);
+			std::cout << "Resizing image to 128x128\n";
+            cv::resize(image, source, cv::Size(std::min<int>(128, image.cols), std::min<int>(128, image.rows)), 0, 0, cv::INTER_NEAREST);
         }
-        else {
+        else 
+        {
             source = std::move(image);
         }
 

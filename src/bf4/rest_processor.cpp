@@ -112,7 +112,8 @@ namespace se::bf4 {
             const cv::Vec3b* avg_row = _delta.ptr<cv::Vec3b>(y);
             double* error_row = error_map.ptr<double>(y);
 
-            for (int x = 0; x < _original.cols; ++x) {
+            for (int x = 0; x < _original.cols; ++x) 
+            {
                 if (_mask.at<uint8_t>(y, x) == 0)
                 {
                     error_row[x] = 0.0;
@@ -177,10 +178,6 @@ namespace se::bf4 {
     }
     [[nodiscard]] auto rect_processor::find_best_candidate() const noexcept -> candidate_rect
     {
-        constexpr const std::array<int, 14> _sizes = {
-            1, 2, 4, 8, 12, 16, 24, 32,
-            48, 64, 96, 128, 192, 256
-        };
         candidate_rect best{};
 
         const int image_width = _original.cols;
@@ -189,13 +186,13 @@ namespace se::bf4 {
         alignas(sizeof(double) * 4) double gains[4];
 
 
-        for (int height : _sizes)
+        for (int height = 0; height < image_height; height += 2)
         {
             if (height > image_height) {
                 continue;
             }
 
-            for (int width : _sizes)
+			for (int width = 0; width < image_width; width += 2)
             {
                 if (width > image_width) {
                     continue;
